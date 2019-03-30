@@ -2346,6 +2346,8 @@ void package_city(struct city *pcity, struct packet_city_info *packet,
 {
   int i;
   int ppl = 0;
+  char can_build_impr_buf[MAX_NUM_ITEMS + 1];
+  char can_build_unit_buf[MAX_NUM_ITEMS + 1];
 
   packet->id = pcity->id;
   packet->owner = player_number(city_owner(pcity));
@@ -2492,6 +2494,23 @@ void package_city(struct city *pcity, struct packet_city_info *packet,
   packet->walls = city_got_citywalls(pcity);
   packet->style = pcity->style;
   packet->city_image = get_city_bonus(pcity, EFT_CITY_IMAGE);
+
+  improvement_iterate(pimprove) {
+    can_build_impr_buf[improvement_index(pimprove)] =
+	    can_city_build_improvement_now(pcity, pimprove)
+      ? '1' : '0';
+  } improvement_iterate_end;
+  can_build_impr_buf[improvement_count()] = '\0';
+  sz_strlcpy(packet->can_build_improvement, can_build_impr_buf);
+
+  unit_type_iterate(punittype) {
+    can_build_unit_buf[utype_index(punittype)] =
+	    can_city_build_unit_now(pcity, punittype)
+      ? '1' : '0';
+  } unit_type_iterate_end;
+  can_build_unit_buf[utype_count()] = '\0';
+  sz_strlcpy(packet->can_build_unit, can_build_unit_buf);
+
 
   BV_CLR_ALL(packet->improvements);
   improvement_iterate(pimprove) {
