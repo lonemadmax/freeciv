@@ -54,7 +54,7 @@ DEFAULT_FOLLOW_TAG=S3_1
 #     so would break network capability of supposedly "compatible" releases.
 #
 NETWORK_CAPSTRING_MANDATORY="+Freeciv.Devel-3.1-2018.Oct.13"
-NETWORK_CAPSTRING_OPTIONAL=""
+NETWORK_CAPSTRING_OPTIONAL="CityCanBuild"
 
 FREECIV_DISTRIBUTOR=""
 
