@@ -155,7 +155,7 @@ void establish_new_connection(struct connection *pconn)
     /* First connection
      * Replace "restarting in x seconds" meta message */
     maybe_automatic_meta_message(default_meta_message_string());
-    (void) send_server_info_to_metaserver(META_INFO);
+    (void) send_server_info_to_metaserver(META_FORCE);
   }
 
   /* introduce the server to the connection */

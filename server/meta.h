@@ -19,13 +19,14 @@
 
 #define DEFAULT_META_SERVER_NO_SEND  TRUE
 #define DEFAULT_META_SERVER_ADDR     FREECIV_META_URL
-#define METASERVER_REFRESH_INTERVAL   (3*60)
+#define METASERVER_REFRESH_INTERVAL   60
 #define METASERVER_MIN_UPDATE_INTERVAL 7   /* not too short, not too long */
 
 enum meta_flag {
   META_INFO,
   META_REFRESH,
-  META_GOODBYE
+  META_GOODBYE,
+  META_FORCE
 };
 
 const char *default_meta_patches_string(void);
