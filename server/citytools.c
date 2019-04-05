@@ -2348,6 +2348,11 @@ void package_city(struct city *pcity, struct packet_city_info *packet,
   int ppl = 0;
   char can_build_impr_buf[MAX_NUM_ITEMS + 1];
   char can_build_unit_buf[MAX_NUM_ITEMS + 1];
+  char food_output_buf[MAX_NUM_ITEMS + 1];
+  char shield_output_buf[MAX_NUM_ITEMS + 1];
+  char trade_output_buf[MAX_NUM_ITEMS + 1];
+  struct tile *pcenter = city_tile(pcity);
+  int c = 0;
 
   packet->id = pcity->id;
   packet->owner = player_number(city_owner(pcity));
@@ -2525,6 +2530,28 @@ void package_city(struct city *pcity, struct packet_city_info *packet,
   web_packet->granary_size = city_granary_size(city_size_get(pcity));
   web_packet->granary_turns = city_turns_to_grow(pcity);
 #endif /* FREECIV_WEB */
+
+  city_tile_iterate(city_map_radius_sq_get(pcity), pcenter, ptile) {
+    char f[2];
+    char s[2];
+    char t[2];
+
+    fc_snprintf(f, sizeof(f), "%d", city_tile_output_now(pcity, ptile, O_FOOD));
+    fc_snprintf(s, sizeof(s), "%d", city_tile_output_now(pcity, ptile, O_SHIELD));
+    fc_snprintf(t, sizeof(t), "%d", city_tile_output_now(pcity, ptile, O_TRADE));
+    food_output_buf[c] = f[0];
+    shield_output_buf[c] = s[0];
+    trade_output_buf[c] = t[0];
+
+    c += 1;
+
+  } city_tile_iterate_end;
+  food_output_buf[c] = '\0';
+  shield_output_buf[c] = '\0';
+  trade_output_buf[c] = '\0';
+  sz_strlcpy(packet->food_output, food_output_buf);
+  sz_strlcpy(packet->shield_output, shield_output_buf);
+  sz_strlcpy(packet->trade_output, trade_output_buf);
 }
 
 /************************************************************************//**

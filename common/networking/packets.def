@@ -720,6 +720,10 @@ PACKET_CITY_INFO = 31; sc, lsend, is-game-info, force, cancel(PACKET_CITY_SHORT_
   STRING can_build_unit[MAX_LEN_MSG]; add-cap(CityCanBuild)
   STRING can_build_improvement[MAX_LEN_MSG]; add-cap(CityCanBuild)
   BV_IMPRS improvements;
+
+  STRING food_output[MAX_LEN_MSG];
+  STRING shield_output[MAX_LEN_MSG];
+  STRING trade_output[MAX_LEN_MSG];
   BV_CITY_OPTIONS city_options;
   ESTRING name[MAX_LEN_CITYNAME];
 end
