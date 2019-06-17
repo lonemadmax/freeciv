@@ -2404,7 +2404,12 @@ void player_nation_defaults(struct player *pplayer, struct nation_type *pnation,
   pplayer->style = style_of_nation(pnation);
 
   if (set_name) {
-    server_player_set_name(pplayer, pick_random_player_name(pnation));
+    if (is_ai(pplayer)) {
+      server_player_set_name(pplayer, pick_random_player_name(pnation));
+    } else {
+      /* FIXME: in Web client, connection username == player name.*/
+      server_player_set_name(pplayer, pplayer->username);
+    }
   }
 
   if ((pleader = nation_leader_by_name(pnation, player_name(pplayer)))) {
