@@ -1379,7 +1379,7 @@ static void explain_why_no_action_enabled(struct unit *punit,
   case ANEK_NO_WAR:
     notify_player(pplayer, unit_tile(punit), E_BAD_COMMAND, ftc_server,
                   _("You must declare war on %s first.  Try using "
-                    "the Nations report (F3)."),
+                    "the Nations report."),
                   player_name(explnat->no_war_with));
     break;
   case ANEK_DOMESTIC:
