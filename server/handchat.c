@@ -327,7 +327,7 @@ void handle_chat_msg_req(struct connection *pconn, const char *message)
   /* This loop to prevent players from sending multiple lines which can
    * be abused */
   for (cp = real_message; *cp != '\0'; cp++) {
-    if (*cp == '\n' || *cp == '\r') {
+    if (*cp == '\n' || *cp == '\r' || *cp == '<' || *cp == '>' || *cp == '"' || *cp == '\'') {
       *cp = '\0';
       break;
     }

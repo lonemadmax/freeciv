@@ -33,8 +33,8 @@
 
 #include "featured_text.h"
 
-#define SEQ_START '['
-#define SEQ_STOP ']'
+#define SEQ_START '<'
+#define SEQ_STOP '>'
 #define SEQ_END '/'
 
 #define MAX_LEN_STR 32
@@ -142,7 +142,7 @@ static const char *text_tag_type_short_name(enum text_tag_type type)
   case TTT_UNDERLINE:
     return "u";
   case TTT_COLOR:
-    return "c";
+    return "font";
   case TTT_LINK:
     return "l";
   };
@@ -239,7 +239,7 @@ static bool text_tag_init_from_sequence(struct text_tag *ptag,
     {
       if (!find_option(sequence, "foreground", ptag->color.foreground,
                        sizeof(ptag->color.foreground))
-          && !find_option(sequence, "fg", ptag->color.foreground,
+          && !find_option(sequence, "color", ptag->color.foreground,
                           sizeof(ptag->color.foreground))) {
         ptag->color.foreground[0] = '\0';
       }
@@ -483,7 +483,7 @@ static size_t text_tag_start_sequence(const struct text_tag *ptag,
                                text_tag_type_short_name(ptag->type));
 
       if (ptag->color.foreground[0] != '\0') {
-        ret += fc_snprintf(buf + ret, len - ret, " fg=\"%s\"",
+        ret += fc_snprintf(buf + ret, len - ret, " color=\"%s\"",
                            ptag->color.foreground);
       }
       if (ptag->color.background[0] != '\0') {
@@ -1064,10 +1064,9 @@ const char *city_link(const struct city *pcity)
 {
   static char buf[MAX_LEN_LINK];
 
-  fc_snprintf(buf, sizeof(buf), "%c%s tgt=\"%s\" id=%d name=\"%s\" %c%c",
-              SEQ_START, text_tag_type_short_name(TTT_LINK),
-              text_link_type_name(TLT_CITY), pcity->id,
-              city_name_get(pcity), SEQ_END, SEQ_STOP);
+  fc_snprintf(buf, sizeof(buf), "<a href=\"#\" onclick=\"show_city_dialog_by_id(%d);\">%s</a>",
+              pcity->id,
+              city_name_get(pcity));
   return buf;
 }
 
@@ -1114,10 +1113,8 @@ const char *unit_link(const struct unit *punit)
 {
   static char buf[MAX_LEN_LINK];
 
-  fc_snprintf(buf, sizeof(buf), "%c%s tgt=\"%s\" id=%d name=\"%s\" %c%c",
-              SEQ_START, text_tag_type_short_name(TTT_LINK),
-              text_link_type_name(TLT_UNIT), punit->id,
-              unit_name_translation(punit), SEQ_END, SEQ_STOP);
+  fc_snprintf(buf, sizeof(buf), "%s", unit_name_translation(punit));
+
   return buf;
 }
 
