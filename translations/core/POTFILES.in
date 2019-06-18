@@ -262,6 +262,15 @@ data/alien/nation/madmen.ruleset
 data/alien/nation/mathclub.ruleset
 data/alien/nation/secretsociety.ruleset
 data/alien/nation/teamgladiators.ruleset
+data/webperimental/buildings.ruleset
+data/webperimental/cities.ruleset
+data/webperimental/game.ruleset
+data/webperimental/governments.ruleset
+data/webperimental/script.lua
+data/webperimental/styles.ruleset
+data/webperimental/techs.ruleset
+data/webperimental/terrain.ruleset
+data/webperimental/units.ruleset
 data/helpdata.txt
 data/multiplayer/buildings.ruleset
 data/multiplayer/cities.ruleset
