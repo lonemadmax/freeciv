@@ -4292,10 +4292,12 @@ static void sg_save_player_main(struct savedata *saving,
     int j;
 
     for (tr = trait_begin(), j = 0; tr != trait_end(); tr = trait_next(tr), j++) {
-      secfile_insert_int(saving->file, plr->ai_common.traits[tr].val,
-                         "player%d.trait%d.val", plrno, j);
-      secfile_insert_int(saving->file, plr->ai_common.traits[tr].mod,
-                         "player%d.trait%d.mod", plrno, j);
+      if (plr->ai_common.traits != NULL) {
+        secfile_insert_int(saving->file, plr->ai_common.traits[tr].val,
+                           "player%d.trait%d.val", plrno, j);
+        secfile_insert_int(saving->file, plr->ai_common.traits[tr].mod,
+                           "player%d.trait%d.mod", plrno, j);
+      }
     }
   }
 

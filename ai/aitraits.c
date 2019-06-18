@@ -67,7 +67,13 @@ void ai_traits_close(struct player *pplayer)
 **************************************************************************/
 int ai_trait_get_value(enum trait tr, struct player *pplayer)
 {
-  int val = pplayer->ai_common.traits[tr].val + pplayer->ai_common.traits[tr].mod;
+  int val;
+
+  if (pplayer->ai_common.traits == NULL) {
+    return TRAIT_DEFAULT_VALUE;
+  }
+
+  val = pplayer->ai_common.traits[tr].val + pplayer->ai_common.traits[tr].mod;
 
   /* Clip so that value is at least 1, and maximum is
    * TRAIT_DEFAULT_VALUE as many times as TRAIT_DEFAULT value is
