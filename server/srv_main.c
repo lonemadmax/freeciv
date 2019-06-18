@@ -274,6 +274,7 @@ void srv_init(void)
   srvarg.auth_enabled = FALSE;
   srvarg.auth_allow_guests = FALSE;
   srvarg.auth_allow_newusers = FALSE;
+  srvarg.server_password_enabled = FALSE;
 
   /* mark as initialized */
   has_been_srv_init = TRUE;

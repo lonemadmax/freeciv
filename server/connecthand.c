@@ -453,7 +453,7 @@ bool handle_login_request(struct connection *pconn,
     dsend_packet_connect_msg(pconn, game.server.connectmsg);
   }
 
-  if (srvarg.auth_enabled) {
+  if (srvarg.auth_enabled || srvarg.server_password_enabled) {
     return auth_user(pconn, req->username);
   } else {
     sz_strlcpy(pconn->username, req->username);

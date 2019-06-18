@@ -57,6 +57,8 @@ struct server_arguments {
   bool auth_enabled;            /* defaults to FALSE */
   bool auth_allow_guests;       /* defaults to FALSE */
   bool auth_allow_newusers;     /* defaults to FALSE */
+  bool server_password_enabled; /* defaults to FALSE */
+  char server_password[MAX_LEN_PASSWORD]; /* server password */
   enum announce_type announce;
   int fatal_assertions;         /* default to -1 (disabled). */
 };
