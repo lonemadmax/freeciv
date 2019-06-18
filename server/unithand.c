@@ -3090,6 +3090,7 @@ void handle_goto_path_req(struct player *pplayer, int unit_id, int goal)
 
   /* Use path-finding to find a goto path. */
   pft_fill_unit_parameter(&parameter, punit);
+  parameter.get_TB = no_intermediate_fights;
   pfm = pf_map_new(&parameter);
   path = pf_map_path(pfm, ptile);
   pf_map_destroy(pfm);
