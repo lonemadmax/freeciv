@@ -3102,8 +3102,6 @@ static bool load_ruleset_terrain(struct section_file *file,
           }
         }
 
-        extra_to_category_list(pextra, pextra->category);
-
         if (pextra->causes == 0) {
           /* Extras that do not have any causes added to EC_NONE list */
           extra_to_caused_by_list(pextra, EC_NONE);
@@ -6128,6 +6126,7 @@ static bool load_ruleset_game(struct section_file *file, bool act,
       auto_perf->alternatives[0] = ACTION_CAPTURE_UNITS;
       auto_perf->alternatives[1] = ACTION_BOMBARD;
       auto_perf->alternatives[2] = ACTION_ATTACK;
+      auto_perf->alternatives[3] = ACTION_SUICIDE_ATTACK;
     }
 
     /* section: actions */
@@ -6153,6 +6152,8 @@ static bool load_ruleset_game(struct section_file *file, bool act,
                ACTION_CAPTURE_UNITS);
         BV_SET(action_by_number(ACTION_NUKE)->blocked_by,
                ACTION_CAPTURE_UNITS);
+        BV_SET(action_by_number(ACTION_SUICIDE_ATTACK)->blocked_by,
+               ACTION_CAPTURE_UNITS);
         BV_SET(action_by_number(ACTION_ATTACK)->blocked_by,
                ACTION_CAPTURE_UNITS);
         BV_SET(action_by_number(ACTION_CONQUER_CITY)->blocked_by,
@@ -6168,6 +6169,8 @@ static bool load_ruleset_game(struct section_file *file, bool act,
       if (force_bombard) {
         BV_SET(action_by_number(ACTION_NUKE)->blocked_by,
                ACTION_BOMBARD);
+        BV_SET(action_by_number(ACTION_SUICIDE_ATTACK)->blocked_by,
+               ACTION_BOMBARD);
         BV_SET(action_by_number(ACTION_ATTACK)->blocked_by,
                ACTION_BOMBARD);
         BV_SET(action_by_number(ACTION_CONQUER_CITY)->blocked_by,
@@ -6181,6 +6184,8 @@ static bool load_ruleset_game(struct section_file *file, bool act,
                                       "actions.force_explode_nuclear");
 
       if (force_explode_nuclear) {
+        BV_SET(action_by_number(ACTION_SUICIDE_ATTACK)->blocked_by,
+               ACTION_NUKE);
         BV_SET(action_by_number(ACTION_ATTACK)->blocked_by,
                ACTION_NUKE);
         BV_SET(action_by_number(ACTION_CONQUER_CITY)->blocked_by,

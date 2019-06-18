@@ -2524,8 +2524,7 @@ void package_unit(struct unit *punit, struct packet_unit_info *packet)
       packet->orders[i] = punit->orders.list[i].order;
       packet->orders_dirs[i] = punit->orders.list[i].dir;
       packet->orders_activities[i] = punit->orders.list[i].activity;
-      packet->orders_targets[i] = punit->orders.list[i].target;
-      packet->orders_extras[i] = punit->orders.list[i].extra;
+      packet->orders_sub_targets[i] = punit->orders.list[i].sub_target;
       packet->orders_actions[i] = punit->orders.list[i].action;
     }
   } else {
@@ -2976,7 +2975,7 @@ static void unit_enter_hut(struct unit *punit)
     return;
   }
 
-  extra_type_by_category_iterate(ECAT_BONUS, pextra) {
+  extra_type_by_cause_iterate(EC_HUT, pextra) {
     if (tile_has_extra(ptile, pextra)) {
       pplayer->server.huts++;
 
@@ -2999,7 +2998,7 @@ static void unit_enter_hut(struct unit *punit)
       /* FIXME: Should have parameter for hut extra type */
       script_server_signal_emit("hut_enter", punit);
     }
-  } extra_type_by_category_iterate_end;
+  } extra_type_by_cause_iterate_end;
 
   send_player_info_c(pplayer, pplayer->connections); /* eg, gold */
   return;
@@ -4123,9 +4122,9 @@ bool execute_orders(struct unit *punit, const bool fresh)
                       || action_id_exists(order.action)),
                      continue);
 
-    pextra = (order.extra == EXTRA_NONE ?
+    pextra = (order.sub_target == EXTRA_NONE ?
                 NULL :
-                extra_by_number(order.extra));
+                extra_by_number(order.sub_target));
 
     switch (order.order) {
     case ORDER_MOVE:
@@ -4440,8 +4439,7 @@ bool execute_orders(struct unit *punit, const bool fresh)
       performed = unit_perform_action(pplayer,
                                       unitid,
                                       tgt_id,
-                                      order.extra,
-                                      order.target,
+                                      order.sub_target,
                                       name,
                                       order.action,
                                       ACT_REQ_PLAYER);

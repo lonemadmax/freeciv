@@ -38,9 +38,6 @@ m4_include(fc_version)
 
 AC_ARG_VAR([FREECIV_LABEL_FORCE], [Forced version label format])
 
-VERSION_WITHOUT_LABEL=${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}${EMERG_PART}
-VERSION=${VERSION_WITHOUT_LABEL}${VERSION_LABEL}x
-
 AC_DEFINE_UNQUOTED([MAJOR_VERSION], [$MAJOR_VERSION], [Major version])
 AC_DEFINE_UNQUOTED([MINOR_VERSION], [$MINOR_VERSION], [Minor version])
 AC_DEFINE_UNQUOTED([PATCH_VERSION], [$PATCH_VERSION], [Patch version])
@@ -48,7 +45,7 @@ if test x$EMERGENCY_VERSION != x ; then
   AC_DEFINE_UNQUOTED([EMERGENCY_VERSION], [$EMERGENCY_VERSION], [Emergency version])
 fi
 AC_DEFINE_UNQUOTED([VERSION_LABEL], ["${VERSION_LABEL}"], [Version label])
-AC_DEFINE_UNQUOTED([VERSION_STRING], ["${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}${EMERG_PART}${VERSION_LABEL}"], [Version string])
+AC_DEFINE_UNQUOTED([VERSION_STRING], ["${VERSION_STRING}"], [Version string])
 AC_DEFINE_UNQUOTED([IS_DEVEL_VERSION], [$IS_DEVEL_VERSION], [Is this a devel version])
 AC_DEFINE_UNQUOTED([IS_FREEZE_VERSION], [$IS_FREEZE_VERSION], [Is this a frozen version])
 AC_DEFINE_UNQUOTED([IS_BETA_VERSION], [$IS_BETA_VERSION], [Is this a beta version])
@@ -56,15 +53,6 @@ AC_DEFINE_UNQUOTED([NEXT_STABLE_VERSION], ["$NEXT_STABLE_VERSION"], [Version num
 AC_DEFINE_UNQUOTED([FREECIV_RELEASE_MONTH], [$RELEASE_MONTH], [Month next version will be released])
 AC_SUBST([MAJOR_VERSION])
 AC_SUBST([MINOR_VERSION])
-
-AC_DEFINE_UNQUOTED([NETWORK_CAPSTRING_MANDATORY],
-		   ["$NETWORK_CAPSTRING_MANDATORY"],
-		   [Network capability string])
-AC_SUBST([NETWORK_CAPSTRING_MANDATORY])
-AC_DEFINE_UNQUOTED([NETWORK_CAPSTRING_OPTIONAL],
-		   ["$NETWORK_CAPSTRING_OPTIONAL"],
-		   [Additional optional network capabilities])
-AC_SUBST([NETWORK_CAPSTRING_OPTIONAL])
 
 AC_DEFINE_UNQUOTED([DATASUBDIR],
                    ["$DATASUBDIR"],
@@ -1245,7 +1233,6 @@ AC_SUBST([ruledit_cxxflags])
 AC_SUBST([ruledit_libs])
 AC_SUBST([SOUND_CFLAGS])
 AC_SUBST([SOUND_LIBS])
-AC_SUBST([VERSION_WITHOUT_LABEL])
 AC_SUBST([VERSION_LABEL])
 AC_SUBST([HOST_PATH_SEPARATOR])
 AC_SUBST([HOST_DIR_SEPARATOR])
@@ -1754,6 +1741,7 @@ AC_CONFIG_FILES([Makefile
           tools/ruledit/freeciv-ruledit.appdata.xml:bootstrap/freeciv-ruledit.appdata.xml.in])
 AC_CONFIG_FILES([fcgui:bootstrap/fcgui.in], [chmod +x fcgui])
 AC_CONFIG_FILES([fcser:bootstrap/fcser.in], [chmod +x fcser])
+AC_CONFIG_FILES([fcruleup:bootstrap/fcruleup.in], [chmod +x fcruleup])
 if test "x$ruledit" = "xyes" ; then
   AC_CONFIG_FILES([fcruledit:bootstrap/fcruledit.in], [chmod +x fcruledit])
 fi

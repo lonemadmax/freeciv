@@ -47,7 +47,7 @@ void action_success_actor_consume(struct action *paction,
       wipe_unit(actor, ULR_DISBANDED, NULL);
     } else if (action_has_result(paction, ACTION_NUKE)) {
       wipe_unit(actor, ULR_DETONATED, NULL);
-    } else if (action_has_result(paction, ACTION_ATTACK)) {
+    } else if (action_has_result(paction, ACTION_SUICIDE_ATTACK)) {
       wipe_unit(actor, ULR_MISSILE, NULL);
     } else {
       wipe_unit(actor, ULR_USED, NULL);
@@ -848,12 +848,12 @@ struct extra_type *action_tgt_tile_extra(const struct unit *actor,
                                          const struct tile *target_tile,
                                          bool accept_all_actions)
 {
-  extra_active_type_iterate(target) {
+  extra_type_re_active_iterate(target) {
     if (may_unit_act_vs_tile_extra(actor, target_tile, target,
                                    accept_all_actions)) {
       return target;
     }
-  } extra_active_type_iterate_end;
+  } extra_type_re_active_iterate_end;
 
   return NULL;
 }
@@ -944,7 +944,7 @@ action_auto_perf_unit_do(const enum action_auto_perf_cause cause,
 #define perform_action_to(act, actor, tgtid, tgt_extra)                   \
   if (unit_perform_action(unit_owner(actor),                              \
                           actor->id, tgtid, tgt_extra,                    \
-                          0, NULL, act, ACT_REQ_RULES)) {                 \
+                          NULL, act, ACT_REQ_RULES)) {                    \
     return action_by_number(act);                                         \
   }
 

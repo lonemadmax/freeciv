@@ -253,8 +253,7 @@ static struct unit *unpackage_unit(const struct packet_unit_info *packet)
       punit->orders.list[i].order = packet->orders[i];
       punit->orders.list[i].dir = packet->orders_dirs[i];
       punit->orders.list[i].activity = packet->orders_activities[i];
-      punit->orders.list[i].target = packet->orders_targets[i];
-      punit->orders.list[i].extra = packet->orders_extras[i];
+      punit->orders.list[i].sub_target = packet->orders_sub_targets[i];
       punit->orders.list[i].action = packet->orders_actions[i];
 
       /* Just an assert. The client doesn't use the action data. */
@@ -3876,8 +3875,6 @@ void handle_ruleset_extra(const struct packet_ruleset_extra *p)
     }
   }
 
-  extra_to_category_list(pextra, pextra->category);
-
   if (pextra->causes == 0) {
     extra_to_caused_by_list(pextra, EC_NONE);
   } else {
@@ -4683,6 +4680,7 @@ static action_id auto_attack_act(const struct act_prob *act_probs)
       case ACTION_BOMBARD:
       case ACTION_NUKE:
       case ACTION_ATTACK:
+      case ACTION_SUICIDE_ATTACK:
       case ACTION_CONQUER_CITY:
         /* An attack. */
         if (attack_action == ACTION_NONE) {
