@@ -302,6 +302,7 @@ struct tile_cache; /* defined and only used within city.c */
 
 struct adv_city; /* defined in ./server/advisors/infracache.h */
 
+#pragma pack(push, 1)
 struct city {
   char name[MAX_LEN_CITYNAME];
   struct tile *tile; /* May be NULL, should check! */
@@ -450,6 +451,7 @@ struct city {
     } client;
   };
 };
+#pragma pack(pop)
 
 struct citystyle {
   struct name_translation name;
