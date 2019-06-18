@@ -104,6 +104,7 @@ static bool is_terrain_ecologically_wet(struct tile *ptile)
 **************************************************************************/
 void global_warming(int effect)
 {
+  return; //disabled, causes problems.
   climate_change(TRUE, effect);
   notify_player(NULL, NULL, E_GLOBAL_ECO, ftc_server,
                 _("Global warming has occurred!"));
