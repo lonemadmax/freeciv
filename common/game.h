@@ -214,7 +214,7 @@ struct civ_game {
       char save_name[MAX_LEN_NAME];
       bool scorelog;
       enum scorelog_level scoreloglevel;
-      char scorefile[MAX_LEN_NAME];
+      char scorefile[100];
       int scoreturn;    /* next make_history_report() */
       int seed_setting;
       int seed;

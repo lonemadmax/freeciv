@@ -582,6 +582,7 @@ static int get_munits(const struct player *pplayer)
   return result;
 }
 
+#if 0
 /**********************************************************************//**
   Number of city building units.
 **************************************************************************/
@@ -600,6 +601,7 @@ static int get_settlers(const struct player *pplayer)
 
   return result;
 }
+#endif
 
 /**********************************************************************//**
   Wonder score
@@ -617,6 +619,7 @@ static int get_techout(const struct player *pplayer)
   return pplayer->score.techout;
 }
 
+#if 0
 /**********************************************************************//**
   Literacy score calculated one way. See also get_literacy() to see
   alternative way.
@@ -625,6 +628,7 @@ static int get_literacy2(const struct player *pplayer)
 {
   return pplayer->score.literacy;
 }
+#endif
 
 /**********************************************************************//**
   Spaceship score
@@ -666,6 +670,7 @@ static int get_gold(const struct player *pplayer)
   return pplayer->economic.gold;
 }
 
+#if 0
 /**********************************************************************//**
   Tax rate
 **************************************************************************/
@@ -765,6 +770,7 @@ static int get_corruption(const struct player *pplayer)
 
   return result;
 }
+#endif
 
 /**********************************************************************//**
   Total score
@@ -1271,6 +1277,10 @@ void log_civ_score_init(void)
     return;
   }
 
+  fc_snprintf(game.server.scorefile, 100,
+              "/var/lib/tomcat8/webapps/data/scorelogs/score-%d.log",
+              srvarg.port);
+
   score_log = fc_calloc(1, sizeof(*score_log));
   score_log->fp = NULL;
   score_log->last_turn = -1;
@@ -1330,41 +1340,25 @@ void log_civ_score_now(void)
     char *name;
     int (*get_value) (const struct player *);
   } score_tags[] = {
+    {"score",           get_total_score}, /* New 2.1.10 tag end here. */
     {"pop",             get_pop},
     {"bnp",             get_economics},
     {"mfg",             get_production},
     {"cities",          get_cities},
     {"techs",           get_techs},
     {"munits",          get_munits},
-    {"settlers",        get_settlers},  /* "original" tags end here */
 
     {"wonders",         get_wonders},
     {"techout",         get_techout},
     {"landarea",        get_landarea},
     {"settledarea",     get_settledarea},
-    {"pollution",       get_pollution},
-    {"literacy",        get_literacy2},
-    {"spaceship",       get_spaceship}, /* new 1.8.2 tags end here */
 
     {"gold",            get_gold},
-    {"taxrate",         get_taxrate},
-    {"scirate",         get_scirate},
-    {"luxrate",         get_luxrate},
-    {"riots",           get_riots},
-    {"happypop",        get_happypop},
-    {"contentpop",      get_contentpop},
-    {"unhappypop",      get_unhappypop},
-    {"specialists",     get_specialists},
-    {"gov",             get_gov},
-    {"corruption",      get_corruption}, /* new 1.11.5 tags end here */
-
-    {"score",           get_total_score}, /* New 2.1.10 tag end here. */
 
     {"unitsbuilt",      get_units_built}, /* New tags since 2.3.0. */
     {"unitskilled",     get_units_killed},
     {"unitslost",       get_units_lost},
 
-    {"culture",         get_culture}      /* New tag in 2.6.0. */
   };
 
   if (!game.server.scorelog) {
