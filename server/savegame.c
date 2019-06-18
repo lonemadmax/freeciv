@@ -129,8 +129,8 @@ void save_game(const char *orig_filename, const char *save_reason,
   stdata->save_compress_level = game.server.save_compress_level;
 
   if (!orig_filename) {
-    stdata->filepath[0] = '\0';
-    filename = stdata->filepath;
+    con_write(C_FAIL, _("Failed saving game. Missing filename."));
+    return;
   } else {
     sz_strlcpy(stdata->filepath, orig_filename);
     if ((filename = strrchr(stdata->filepath, '/'))) {
@@ -164,13 +164,6 @@ void save_game(const char *orig_filename, const char *save_reason,
         }
       }
     }
-  }
-
-  /* If orig_filename is NULL or empty, use a generated default name. */
-  if (filename[0] == '\0'){
-    /* manual save */
-    generate_save_name(game.server.save_name, filename,
-                       sizeof(stdata->filepath) + stdata->filepath - filename, "manual");
   }
 
   timer_cpu = timer_new(TIMER_CPU, TIMER_ACTIVE);

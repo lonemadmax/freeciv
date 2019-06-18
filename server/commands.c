@@ -536,7 +536,7 @@ static struct command commands[] = {
       "all cities and units etc. Use with care!"), NULL,
    CMD_ECHO_ALL, VCF_NONE, 50
   },
-  {"save",	ALLOW_ADMIN,
+  {"save",	ALLOW_CTRL,
    /* TRANS: translate text between <> only */
    N_("save\n"
       "save <file-name>"),

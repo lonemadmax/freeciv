@@ -1715,7 +1715,7 @@ bool make_dir(const char *pathname)
     mkdir(path, 0755);
 #endif /* HAVE__MKDIR */
 #else  /* FREECIV_MSWINDOWS */
-    mkdir(path, 0755);
+    mkdir(path, 0775);
 #endif /* FREECIV_MSWINDOWS */
 
     if (dir) {
