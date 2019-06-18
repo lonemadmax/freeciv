@@ -160,6 +160,7 @@ struct player *create_barbarian_player(enum barbarian_type type)
   server.nbarbarians++;
 
   sz_strlcpy(barbarians->username, _(ANON_USER_NAME));
+  server_player_set_name(barbarians, pick_random_player_name(nation));
   barbarians->unassigned_user = TRUE;
   barbarians->is_connected = FALSE;
   barbarians->government = init_government_of_nation(nation);
