@@ -3819,6 +3819,8 @@ bool load_command(struct connection *caller, const char *filename, bool check,
     } players_iterate_end;
   } achievements_iterate_end;
 
+  cmd_reply(CMD_DEFAULT, caller, C_OK, _("Load complete"));
+
   return TRUE;
 }
 
