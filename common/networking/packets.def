@@ -2325,3 +2325,13 @@ PACKET_GOTO_PATH = 288; sc, dsend
   TILE dest;
   UINT32 turns;
 end
+
+PACKET_INFO_TEXT_REQ = 289; cs, dsend
+  TILE loc;
+  UNIT visible_unit;
+  UNIT focus_unit;
+end
+
+PACKET_INFO_TEXT_MESSAGE = 290; sc, dsend
+  STRING message[MAX_LEN_MSG];
+end

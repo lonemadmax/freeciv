@@ -141,4 +141,7 @@ void destroy_extra(struct tile *ptile, struct extra_type *pextra);
 void give_distorted_map(struct player *pfrom, struct player *pto, int good,
                         int bad, bool reveal_cities);
 
+void handle_info_text_req(struct player *pplayer, int loc, int visible_unit_id,
+                          int focus_unit_id);
+
 #endif  /* FC__MAPHAND_H */
