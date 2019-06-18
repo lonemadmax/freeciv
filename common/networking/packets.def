@@ -2311,3 +2311,17 @@ PACKET_WEB_RULESET_UNIT_ADDITION = 258; sc, lsend
 
   BV_ACTIONS utype_actions;
 end
+
+# used for showing GOTO path in web client.
+PACKET_GOTO_PATH_REQ = 287; cs, dsend
+  UNIT unit_id;
+  TILE goal;
+end
+
+PACKET_GOTO_PATH = 288; sc, dsend
+  UNIT unit_id;
+  UINT16 length;
+  DIRECTION dir[MAX_LEN_ROUTE:length];
+  TILE dest;
+  UINT32 turns;
+end
