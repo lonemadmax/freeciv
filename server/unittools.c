@@ -4224,7 +4224,11 @@ bool execute_orders(struct unit *punit, const bool fresh)
           send_unit_info(NULL, punit);
           break;
         } else {
-          if ((activity == ACTIVITY_BASE
+
+          if (pextra == NULL) {
+            log_error("No extra for ordered unit");
+            return TRUE;
+          } else if ((activity == ACTIVITY_BASE
                || activity == ACTIVITY_GEN_ROAD
                || activity == ACTIVITY_IRRIGATE
                || activity == ACTIVITY_MINE)
