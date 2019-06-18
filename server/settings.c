@@ -780,6 +780,10 @@ static void topology_action(const struct setting *pset)
 ****************************************************************************/
 static void metamessage_action(const struct setting *pset)
 {
+  if (is_longturn() && S_S_RUNNING == server_state()) {
+    return;
+  }
+
   /* Set the metaserver message based on the new meta server user message.
    * An empty user metaserver message results in an automatic meta message.
    * A non empty user meta message results in the user meta message. */
