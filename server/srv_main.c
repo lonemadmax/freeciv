@@ -2760,7 +2760,10 @@ static void srv_running(void)
           for (i = 0; i < mapimg_count(); i++) {
             struct mapdef *pmapdef = mapimg_isvalid(i);
             if (pmapdef != NULL) {
-              mapimg_create(pmapdef, FALSE, game.server.save_name,
+              char imgfilename[128];
+              fc_snprintf(imgfilename, sizeof(imgfilename), "map-%d", srvarg.port);
+
+              mapimg_create(pmapdef, FALSE, imgfilename,
                             srvarg.saves_pathname);
             } else {
               log_error("%s", mapimg_error());
@@ -2962,6 +2965,20 @@ static void srv_scores(void)
      * the -q parameter. */
     save_game_auto("Game over", AS_GAME_OVER);
   }
+  int i = 0;
+  for (i = 0; i < mapimg_count(); i++) {
+    struct mapdef *pmapdef = mapimg_isvalid(i);
+    if (pmapdef != NULL) {
+      char imgfilename[128];
+      fc_snprintf(imgfilename, sizeof(imgfilename), "map-%d", srvarg.port);
+
+      mapimg_create(pmapdef, TRUE, imgfilename,
+                    srvarg.saves_pathname);
+    } else {
+      log_error("%s", mapimg_error());
+    }
+  }
+
 }
 
 /**********************************************************************//**
