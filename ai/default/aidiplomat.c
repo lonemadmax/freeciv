@@ -874,6 +874,11 @@ void dai_manage_diplomat(struct ai_type *ait, struct player *pplayer,
       || unit_data->task == AIUNIT_DEFEND_HOME) {
     bool failure = FALSE;
 
+    if (punit->goto_tile == NULL) {
+      dai_unit_new_task(ait, punit, AIUNIT_NONE, NULL);
+      return;
+    }
+
     ctarget = tile_city(punit->goto_tile);
     if (pf_map_position(pfm, punit->goto_tile, &pos)
         && ctarget) {
