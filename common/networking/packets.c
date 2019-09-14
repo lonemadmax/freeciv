@@ -837,14 +837,15 @@ const struct packet_handlers *packet_handlers_get(const char *capability)
   struct packet_handlers *phandlers;
   char functional_capability[MAX_LEN_CAPSTR] = "";
   char *tokens[MAX_LEN_CAPSTR / 2];
+  char *functional_tokens[MAX_LEN_CAPSTR / 2];
   int tokens_num;
+  int functional_tokens_num = 0;
   int i;
 
   fc_assert(strlen(capability) < sizeof(functional_capability));
 
   /* Get functional network capability string. */
   tokens_num = get_tokens(capability, tokens, ARRAY_SIZE(tokens), " \t\n,");
-  qsort(tokens, tokens_num, sizeof(*tokens), compare_strings_ptrs);
   for (i = 0; i < tokens_num; i++) {
     char *token;
 
@@ -853,13 +854,17 @@ const struct packet_handlers *packet_handlers_get(const char *capability)
       token++;
     }
 
-    if (!has_capability(token, packet_functional_capability)) {
-      continue;
+    if (has_capability(token, packet_functional_capability)) {
+      functional_tokens[functional_tokens_num++] = token;
     }
+  }
+  qsort(functional_tokens, functional_tokens_num,
+        sizeof(*functional_tokens), compare_strings_ptrs);
+  for (i = 0; i < functional_tokens_num; i++) {
     if (functional_capability[0] != '\0') {
       sz_strlcat(functional_capability, " ");
     }
-    sz_strlcat(functional_capability, token);
+    sz_strlcat(functional_capability, functional_tokens[i]);
   }
   free_tokens(tokens, tokens_num);
 
